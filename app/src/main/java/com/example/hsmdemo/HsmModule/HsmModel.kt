@@ -69,8 +69,8 @@ class HsmModel(private val mContext: Context?) {
 
     fun encryptData(data: ByteArray): ByteArray? {
         try {
-            val IV = ByteArray(data.size)
-            val res = device!!.keyEncrypt_v1(HSM_KEY_ID, AlgorithmConstants.ALG_AES, 1, data, IV)
+            val IV = ByteArray(16)
+            val res = device!!.keyEncrypt_v1(HSM_KEY_ID, AlgorithmConstants.ALG_AES, 0, data, IV)
             return res
         } catch (e: DeviceException) {
             e.printStackTrace()
@@ -80,8 +80,8 @@ class HsmModel(private val mContext: Context?) {
 
     fun decryptData(data: ByteArray): ByteArray? {
         try {
-            val IV = ByteArray(data.size)
-            val res = device!!.keyEncrypt_v1(HSM_KEY_ID, AlgorithmConstants.ALG_AES, 1, data, IV)
+            val IV = ByteArray(16)
+            val res = device!!.keyDecrypt_v1(HSM_KEY_ID, AlgorithmConstants.ALG_AES, 0, data, IV)
             Log.d(TAG, "decryptData res: ${HexStringUtils.byteArrayToHexString(res)}")
             return res
         } catch (e: DeviceException) {
